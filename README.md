@@ -1,8 +1,8 @@
 # Codebase to Course
 
-A Claude Code skill that turns any codebase into a beautiful, interactive single-page HTML course.
+A Codex skill that turns any codebase into a beautiful, interactive HTML course.
 
-Point it at a repo. Get back a stunning, self-contained course that teaches how the code works — with scroll-based navigation, animated visualizations, embedded quizzes, and code-with-plain-English side-by-side translations.
+Point it at a repo. Get back a course that teaches how the code works through scroll-based navigation, animated visualizations, and code-with-plain-English side-by-side translations.
 
 ## Who is this for?
 
@@ -20,7 +20,7 @@ You're not trying to become a software engineer. You want coding as a superpower
 
 ## What the course looks like
 
-The output is a **single HTML file** — no dependencies, no setup, works offline. It includes:
+The output is a small course directory with an assembled `index.html`, reusable CSS and JavaScript, and no build-time dependencies. It includes:
 
 - **Scroll-based modules** with progress tracking and keyboard navigation
 - **Code ↔ Plain English translations** — real code on the left, what it means on the right
@@ -29,22 +29,18 @@ The output is a **single HTML file** — no dependencies, no setup, works offlin
 - **Animated visualizations** — data flow animations, group chat between components, architecture diagrams
 <img width="720" alt="Animated data flow" src="https://github.com/user-attachments/assets/20fb403e-7dfd-4a47-989b-bbae86ca8041" />
 
-- **Interactive quizzes** that test *application* not memorization ("You want to add favorites — which files change?")
-<img width="720" alt="Interactive quiz" src="https://github.com/user-attachments/assets/57706496-9fa8-457a-8450-3da22789951c" />
-
 - **Glossary tooltips** — hover any technical term for a plain-English definition
 <img width="720" alt="Glossary tooltip" src="https://github.com/user-attachments/assets/ac2f160a-d73f-4779-97b2-a06fdb5f3227" />
 
-  
 - **Warm, distinctive design** — not the typical purple-gradient AI look
 
 ## How to use
 
-### As a Claude Code skill
+### As a Codex skill
 
-1. Copy the `codebase-to-course` folder into `~/.claude/skills/`
-2. Open any project in Claude Code
-3. Say: *"Turn this codebase into an interactive course"*
+1. Copy the `codebase-to-course` folder into `${CODEX_HOME:-$HOME/.codex}/skills/`.
+2. Start a new Codex thread in the project you want to learn.
+3. Say: *"Use `$codebase-to-course` to turn this project into an interactive course."*
 
 ### Trigger phrases
 
@@ -64,10 +60,6 @@ This inverts traditional CS education. The old way: memorize concepts for years 
 
 Every screen is at least 50% visual. Max 2-3 sentences per text block. If something can be a diagram, animation, or interactive element — it shouldn't be a paragraph.
 
-### Quizzes test doing, not knowing
-
-No "What does API stand for?" Instead: "A user reports stale data after switching pages. Where would you look first?" Quizzes test whether you can *use* what you learned to solve a new problem.
-
 ### No recycled metaphors
 
 Each concept gets a metaphor that fits *that specific idea*. A database is a library with a card catalog. Auth is a bouncer checking IDs. API rate limiting is a nightclub with a capacity limit. Never the same metaphor twice.
@@ -80,13 +72,22 @@ Code snippets are exact copies from the real codebase — never modified or simp
 
 ```
 codebase-to-course/
-├── SKILL.md                          # Main skill instructions
+├── SKILL.md                         # Main skill instructions
+├── agents/
+│   └── openai.yaml                  # Codex UI metadata
 └── references/
+    ├── _base.html                   # Course shell
+    ├── _footer.html                 # Closing HTML
+    ├── build.sh                     # Assembles index.html
+    ├── content-philosophy.md         # Teaching and writing rules
     ├── design-system.md              # CSS tokens, typography, colors, layout
-    └── interactive-elements.md       # Quiz, animation, and visualization patterns
+    ├── gotchas.md                    # Review checklist
+    ├── interactive-elements.md       # Animation and visualization patterns
+    ├── main.js                       # Shared interaction engine
+    ├── module-brief-template.md      # Complex-course planning template
+    └── styles.css                    # Shared course styles
 ```
-
 
 ---
 
-Built by [Zara](https://x.com/zarazhangrui) with Claude Code.
+Originally built by [Zara](https://x.com/zarazhangrui); adapted for Codex.

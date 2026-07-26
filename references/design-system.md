@@ -366,7 +366,7 @@ html {
 
 ## Code Block Globals
 
-All code blocks in the course — whether inside translation blocks, standalone snippets, or quiz challenges — must wrap text and never show a horizontal scrollbar. This is a teaching tool, not an IDE.
+All code blocks in the course — whether inside translation blocks, standalone snippets, or interactive challenges — must wrap text and never show a horizontal scrollbar. This is a teaching tool, not an IDE.
 
 ```css
 pre, code {

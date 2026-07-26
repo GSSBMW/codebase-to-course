@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase to Course"
+  short_description: "Turn codebases into interactive visual courses"
+  default_prompt: "Use $codebase-to-course to turn this project into an interactive visual course."
