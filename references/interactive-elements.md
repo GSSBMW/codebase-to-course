@@ -219,15 +219,16 @@ Step-by-step visualization of data moving between components. User clicks "Next 
 
 ## Interactive Architecture Diagram
 
-Full-system diagram where hovering/clicking a component shows a description tooltip.
+Full-system diagram where clicking a component shows its description.
+
+**Wiring:** `main.js` auto-initializes every `.arch-component` on page load — do **not** add an `onclick` attribute. Put the text in `data-desc` on each component; clicking it marks that component `.active` and writes its `data-desc` into the `.arch-description` element of the enclosing `.arch-diagram`. Because the lookup is scoped to the closest `.arch-diagram`, multiple diagrams on one page work independently — so don't give `.arch-description` an `id`.
 
 **HTML:**
 ```html
 <div class="arch-diagram">
   <div class="arch-zone arch-zone-browser">
     <h4 class="arch-zone-label">Browser</h4>
-    <div class="arch-component" data-desc="Injects UI into the web page, reads DOM, captures user actions"
-         onclick="showArchDesc(this)">
+    <div class="arch-component" data-desc="Injects UI into the web page, reads DOM, captures user actions">
       <div class="arch-icon">📄</div>
       <span>Component A</span>
     </div>
@@ -237,7 +238,7 @@ Full-system diagram where hovering/clicking a component shows a description tool
     <h4 class="arch-zone-label">External Services</h4>
     <!-- API cards -->
   </div>
-  <div class="arch-description" id="arch-desc">Click any component to learn what it does</div>
+  <div class="arch-description">Click any component to learn what it does</div>
 </div>
 ```
 
@@ -247,13 +248,15 @@ Full-system diagram where hovering/clicking a component shows a description tool
 
 Shows how different layers (e.g., HTML/CSS/JS, or data/logic/UI) build on each other. Three tabs switch between views.
 
+**Wiring:** `main.js` exposes `window.showLayer(layerId, btn)`. Both arguments are required — `layerId` must be the **full `id` of the target `.layer`** (e.g. `layer-html`, not `html`), and `btn` must be `this` so the function can scope itself to the enclosing `.layer-demo`. Omitting `this` makes the call a silent no-op. Give each layer a page-unique id when a course has more than one layer demo (e.g. `m3-layer-html`).
+
 **HTML:**
 ```html
 <div class="layer-demo">
   <div class="layer-tabs">
-    <button class="layer-tab active" onclick="showLayer('html')">HTML</button>
-    <button class="layer-tab" onclick="showLayer('css')">+ CSS</button>
-    <button class="layer-tab" onclick="showLayer('js')">+ JS</button>
+    <button class="layer-tab active" onclick="showLayer('layer-html', this)">HTML</button>
+    <button class="layer-tab" onclick="showLayer('layer-css', this)">+ CSS</button>
+    <button class="layer-tab" onclick="showLayer('layer-js', this)">+ JS</button>
   </div>
   <div class="layer-viewport">
     <div class="layer" id="layer-html" style="display:block">
@@ -266,9 +269,11 @@ Shows how different layers (e.g., HTML/CSS/JS, or data/logic/UI) build on each o
       <!-- Interactive version -->
     </div>
   </div>
-  <p class="layer-description" id="layer-desc">This is the raw HTML...</p>
+  <p class="layer-description">Each tab adds a layer on top of the last.</p>
 </div>
 ```
+
+> **Note:** `.layer-description` is a static caption — `main.js` does not update it per tab. Write one sentence that holds true across all three layers rather than describing only the first.
 
 ---
 
