@@ -27,17 +27,15 @@ File: src/another/file.ts (lines 45-52)
 Check which elements this module needs. Include enough detail for the writing agent to build them.
 
 - [ ] **Code↔English translation** — which snippet(s) from above
-- [ ] **Quiz** — [number] questions, style: [scenario / debugging / architecture / tracing]. Brief description of each question's angle.
 - [ ] **Group chat animation** — actors: [list]. Message flow summary: [who says what to whom, in what order]
 - [ ] **Data flow animation** — actors: [list]. Steps: [sequence of highlights and packet movements]
-- [ ] **Drag-and-drop** — items: [list], targets: [list]
 - [ ] **Other** — [architecture diagram, layer toggle, pattern cards, etc.]
 
 ### Reference Files to Read
 
 List only the sections the writing agent needs — not the whole file.
 
-- `references/interactive-elements.md` → [section names, e.g., "Multiple-Choice Quizzes", "Group Chat Animation"]
+- `references/interactive-elements.md` → [section names, e.g., "Group Chat Animation", "Message Flow / Data Flow Animation"]
 - `references/design-system.md` → [only if needed for specific tokens not in the brief]
 - `references/content-philosophy.md` → [always include — agent needs content rules]
 - `references/gotchas.md` → [always include — agent needs the checklist]

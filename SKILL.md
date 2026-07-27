@@ -1,11 +1,11 @@
 ---
 name: codebase-to-course
-description: "Turn any codebase into a beautiful, interactive single-page HTML course that teaches how the code works to non-technical people. Use this skill whenever someone wants to create an interactive course, tutorial, or educational walkthrough from a codebase or project. Also trigger when users mention 'turn this into a course,' 'explain this codebase interactively,' 'teach this code,' 'interactive tutorial from code,' 'codebase walkthrough,' 'learn from this codebase,' or 'make a course from this project.' This skill produces a stunning, self-contained HTML file with scroll-based navigation, animated visualizations, embedded quizzes, and code-with-plain-English side-by-side translations."
+description: "Turn any codebase into a beautiful, interactive single-page HTML course that teaches how the code works to non-technical people. Use this skill whenever someone wants to create an interactive course, tutorial, or educational walkthrough from a codebase or project. Also trigger when users mention 'turn this into a course,' 'explain this codebase interactively,' 'teach this code,' 'interactive tutorial from code,' 'codebase walkthrough,' 'learn from this codebase,' or 'make a course from this project.' This skill produces a stunning, self-contained HTML file with scroll-based navigation, animated visualizations, and code-with-plain-English side-by-side translations."
 ---
 
 # Codebase-to-Course
 
-Transform any codebase into a stunning, interactive course. The output is a **directory** containing a pre-built `styles.css`, `main.js`, per-module HTML files, and an assembled `index.html` — open it directly in the browser with no setup required (only external dependency: Google Fonts CDN). The course teaches how the code works through scroll-based modules, animated visualizations, embedded quizzes, and plain-English translations of code.
+Transform any codebase into a stunning, interactive course. The output is a **directory** containing a pre-built `styles.css`, `main.js`, per-module HTML files, and an assembled `index.html` — open it directly in the browser with no setup required (only external dependency: Google Fonts CDN). The course teaches how the code works through scroll-based modules, animated visualizations, and plain-English translations of code.
 
 ## First-Run Welcome
 
@@ -18,7 +18,7 @@ When the skill is first triggered and the user hasn't specified a codebase yet, 
 > - **A GitHub link** — e.g., "make a course from https://github.com/user/repo"
 > - **The current project** — if you're already in a codebase, just say "turn this into a course"
 >
-> I'll read through the code, figure out how everything fits together, and generate a beautiful single-page HTML course with animated diagrams, plain-English code explanations, and interactive quizzes. The whole thing runs in your browser — no setup needed.
+> I'll read through the code, figure out how everything fits together, and generate a beautiful single-page HTML course with animated diagrams, plain-English code explanations, and step-by-step walkthroughs of how your data moves through the system. The whole thing runs in your browser — no setup needed.
 
 If the user provides a GitHub link, clone the repo first (`git clone <url> /tmp/<repo-name>`) before starting the analysis. If they say "this codebase" or similar, use the current working directory.
 
@@ -89,7 +89,7 @@ This is a **menu, not a checklist**. Pick the modules that serve the codebase �
 **Each module should contain:**
 - 3-6 screens (sub-sections that flow within the module)
 - At least one code-with-English translation
-- At least one interactive element (quiz, visualization, or animation)
+- At least one interactive element (visualization, animation, or diagram)
 - One or two "aha!" callout boxes with universal CS insights
 - A metaphor that grounds the technical concept in everyday life — but NEVER reuse the same metaphor across modules, and NEVER default to the "restaurant" metaphor (it's overused). Pick metaphors that organically fit the specific concept. The best metaphors feel *inevitable* for the concept, not forced.
 
@@ -97,10 +97,9 @@ This is a **menu, not a checklist**. Pick the modules that serve the codebase �
 - **Group Chat Animation** — at least one across the course. These are the iMessage/WeChat-style conversations between components. They're one of the most engaging elements and must always appear, even if you have to creatively frame a module's concept as a conversation between actors.
 - **Message Flow / Data Flow Animation** — at least one across the course. The step-by-step packet animation between actors. If the codebase has any kind of request/response, data pipeline, or multi-step process, animate it. Every codebase has data flowing somewhere — find it.
 - **Code ↔ English Translation Blocks** — at least one per module (already required above, but reiterating: this is non-negotiable).
-- **Quizzes** — at least one per module (multiple-choice, scenario, drag-and-drop, or spot-the-bug — any quiz type counts).
 - **Glossary Tooltips** — on every technical term, first use per module.
 
-These five element types are the backbone of every course. Other interactive elements (architecture diagrams, layer toggles, pattern cards, etc.) are optional and should be added when they fit. But the five above must ALWAYS be present — no exceptions.
+These four element types are the backbone of every course. Other interactive elements (architecture diagrams, layer toggles, pattern cards, etc.) are optional and should be added when they fit. But the four above must ALWAYS be present — no exceptions.
 
 **Do NOT present the curriculum for approval — just build it.** The user wants a course, not a planning document. Design the curriculum internally, then go straight to building. If they want changes, they'll tell you after seeing the result.
 
@@ -170,7 +169,7 @@ Dispatch modules to subagents in batches of up to 3. Each agent receives:
 - `references/content-philosophy.md` and `references/gotchas.md`
 - Only the sections of `references/interactive-elements.md` and `references/design-system.md` listed in the brief
 
-Each agent writes its module file(s) to `course-name/modules/`. Short modules (3 screens, one quiz) can be paired — two briefs given to one agent.
+Each agent writes its module file(s) to `course-name/modules/`. Short modules (3 screens, one animation) can be paired — two briefs given to one agent.
 
 **What agents do NOT receive:** the full codebase (snippets are in the brief), SKILL.md, other modules' briefs, or unneeded reference file sections.
 
@@ -214,8 +213,8 @@ The visual design should feel like a **beautiful developer notebook** — warm, 
 
 The `references/` directory contains detailed specs. **Read them only when you reach the relevant phase** — not upfront. This keeps context lean.
 
-- **`references/content-philosophy.md`** — Visual density rules, metaphor guidelines, quiz design, tooltip rules, code translation guidance. Read during Phase 2.5 (briefs) and Phase 3 (writing modules).
+- **`references/content-philosophy.md`** — Visual density rules, metaphor guidelines, tooltip rules, code translation guidance. Read during Phase 2.5 (briefs) and Phase 3 (writing modules).
 - **`references/gotchas.md`** — Common failure points checklist. Read during Phase 3 and Phase 4 (review).
 - **`references/module-brief-template.md`** — Template for Phase 2.5 module briefs. Read only for complex codebases using the parallel path.
 - **`references/design-system.md`** — Complete CSS custom properties, color palette, typography scale, spacing system, shadows, animations, scrollbar styling. Read during Phase 3 when writing module HTML.
-- **`references/interactive-elements.md`** — Implementation patterns for every interactive element: drag-and-drop quizzes, multiple-choice quizzes, code↔English translations, group chat animations, message flow visualizations, architecture diagrams, pattern cards, callout boxes. Read the relevant sections during Phase 3.
+- **`references/interactive-elements.md`** — Implementation patterns for every interactive element: code↔English translations, group chat animations, message flow visualizations, architecture diagrams, layer toggles, pattern cards, callout boxes, glossary tooltips. Read the relevant sections during Phase 3.

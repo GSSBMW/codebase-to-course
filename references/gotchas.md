@@ -19,9 +19,6 @@ Using "restaurant" or "kitchen" for everything. Every module needs its own metap
 ### Code Modifications
 Trimming, simplifying, or "cleaning up" code snippets from the codebase. The learner should be able to open the real file and see the exact same code. Instead of editing code to be shorter, *choose* naturally short snippets (5-10 lines) from the codebase that illustrate the point.
 
-### Quiz Questions That Test Memory
-Asking "What does API stand for?" or "Which file handles X?" — those test recall, not understanding. Every quiz question should present a new scenario the learner hasn't seen and ask them to *apply* what they learned.
-
 ### Scroll-Snap Mandatory
 Using `scroll-snap-type: y mandatory` traps users inside long modules. Always use `proximity`.
 
@@ -29,4 +26,4 @@ Using `scroll-snap-type: y mandatory` traps users inside long modules. Always us
 Trying to write all modules in one pass causes later modules to be thin and rushed. Build one module at a time and verify each before moving on. For complex codebases, use the parallel path with module briefs.
 
 ### Missing Interactive Elements
-A module with only text and code blocks, no interactivity. Every module needs at least one of: quiz, data flow animation, group chat, architecture diagram, drag-and-drop. These aren't decorations — they're how non-technical learners actually process information.
+A module with only text and code blocks, no interactivity. Every module needs at least one of: data flow animation, group chat, architecture diagram, layer toggle. These aren't decorations — they're how non-technical learners actually process information.
