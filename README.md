@@ -20,7 +20,16 @@ You're not trying to become a software engineer. You want coding as a superpower
 
 ## What the course looks like
 
-The output is a **single HTML file** — no dependencies, no setup, works offline. It includes:
+The output is a **folder you open in the browser** — no build step, no install, no server:
+
+```
+my-course/
+├── index.html      # the course — open this
+├── styles.css
+└── main.js
+```
+
+The folder also keeps the per-module HTML sources and the `build.sh` that assembled them, so you can edit one module and rebuild without regenerating the course. The only external request is Google Fonts — offline it falls back to system fonts and everything else still works. The course includes:
 
 - **Scroll-based modules** with progress tracking and keyboard navigation
 - **Code ↔ Plain English translations** — real code on the left, what it means on the right
@@ -69,14 +78,26 @@ Each concept gets a metaphor that fits *that specific idea*. A database is a lib
 
 Code snippets are exact copies from the real codebase — never modified or simplified. The learner should be able to open the actual file and see the same code they learned from.
 
+### One brief, one agent, one module
+
+Writing a whole course in a single pass makes the last modules thin and rushed. So every module gets a written brief first — teaching arc, metaphor, pre-extracted code snippets — and then its own writing agent turns that brief into HTML. Modules are written in parallel, and each agent starts with a small, focused context: the brief carries the code snippets, so writing agents never re-read the codebase.
+
 ## Skill structure
 
 ```
 codebase-to-course/
 ├── SKILL.md                          # Main skill instructions
 └── references/
+    ├── content-philosophy.md         # Visual density, metaphors, tooltips, code translations
     ├── design-system.md              # CSS tokens, typography, colors, layout
-    └── interactive-elements.md       # Animation and visualization patterns
+    ├── gotchas.md                    # Common failure points checklist
+    ├── interactive-elements.md       # Animation and visualization patterns
+    ├── module-brief-template.md      # Template for the per-module briefs
+    ├── _base.html                    # Page shell — title, accent color, nav dots
+    ├── _footer.html                  # Closing markup
+    ├── build.sh                      # Concatenates the parts into index.html
+    ├── main.js                       # All interactivity — copied verbatim, never regenerated
+    └── styles.css                    # All styling — copied verbatim, never regenerated
 ```
 
 
