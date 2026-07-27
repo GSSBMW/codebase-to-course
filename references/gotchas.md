@@ -23,7 +23,7 @@ Trimming, simplifying, or "cleaning up" code snippets from the codebase. The lea
 Using `scroll-snap-type: y mandatory` traps users inside long modules. Always use `proximity`.
 
 ### Module Quality Degradation
-Trying to write all modules in one pass causes later modules to be thin and rushed. Build one module at a time and verify each before moving on. For complex codebases, use the parallel path with module briefs.
+Trying to write all modules in one pass causes later modules to be thin and rushed. Give each module its own brief and its own writing agent, so every module gets full attention, and verify each module file before assembling.
 
 ### Missing Interactive Elements
 A module with only text and code blocks, no interactivity. Every module needs at least one of: data flow animation, group chat, architecture diagram, layer toggle. These aren't decorations — they're how non-technical learners actually process information.

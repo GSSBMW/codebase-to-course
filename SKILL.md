@@ -103,14 +103,11 @@ These four element types are the backbone of every course. Other interactive ele
 
 **Do NOT present the curriculum for approval — just build it.** The user wants a course, not a planning document. Design the curriculum internally, then go straight to building. If they want changes, they'll tell you after seeing the result.
 
-**After designing the curriculum, decide which build path to use:**
+**Every course is built the same way:** write a brief per module (Phase 2.5), then hand the briefs to parallel subagents that write the HTML (Phase 3). There is no single-context path — even a small codebase goes through briefs. That is what keeps each module's quality high and each writing agent's context small.
 
-- **Simple codebase** (single-purpose CLI, small web app, library, one clear entry point, 5 or fewer modules) → go directly to Phase 3 Sequential.
-- **Complex codebase** (full-stack app, multiple services, content-heavy site, monorepo, or 6+ modules) → go to Phase 2.5 first, then Phase 3 Parallel.
+### Phase 2.5: Module Briefs
 
-### Phase 2.5: Module Briefs (complex codebases only)
-
-For complex codebases, write a brief for each module before writing any HTML. This is the critical step that enables parallel writing — each brief gives an agent everything it needs without re-reading the codebase.
+Write a brief for each module before writing any HTML. This is the critical step that enables parallel writing — each brief gives an agent everything it needs without re-reading the codebase.
 
 Read `references/module-brief-template.md` for the template structure. Read `references/content-philosophy.md` for the content rules that should guide brief writing.
 
@@ -135,7 +132,7 @@ course-name/
   _base.html       ← customized shell (title, accent color, nav dots)
   _footer.html     ← copied verbatim from references/_footer.html
   build.sh         ← copied verbatim from references/build.sh
-  briefs/          ← module briefs (complex codebases only, can delete after build)
+  briefs/          ← module briefs (can delete after build)
   modules/
     01-intro.html
     02-actors.html
@@ -143,39 +140,31 @@ course-name/
   index.html       ← assembled by build.sh (do not write manually)
 ```
 
-**Step 1 (both paths): Setup** — Create the course directory. Copy these four files verbatim using Read + Write (do not regenerate their contents):
+**Step 1: Setup** — Create the course directory. Copy these four files verbatim using Read + Write (do not regenerate their contents):
 - `references/styles.css` → `course-name/styles.css`
 - `references/main.js` → `course-name/main.js`
 - `references/_footer.html` → `course-name/_footer.html`
 - `references/build.sh` → `course-name/build.sh`
 
-**Step 2 (both paths): Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three substitutions:
+**Step 2: Customize `_base.html`** — Read `references/_base.html`, then write it to `course-name/_base.html` with exactly three substitutions:
 - Both instances of `COURSE_TITLE` → the actual course title
 - The four `ACCENT_*` placeholders → the chosen accent color values (pick one palette from the comments in `_base.html`)
 - `NAV_DOTS` → one `<button class="nav-dot" ...>` per module
 
-**Step 3: Write modules** — This is where the paths diverge.
-
-#### Sequential path (simple codebases)
-
-Read `references/content-philosophy.md` and `references/gotchas.md`. Then write modules one at a time. For each module, write `course-name/modules/0N-slug.html` containing only the `<section class="module" id="module-N">` block and its contents. Do not include `<html>`, `<head>`, `<body>`, `<style>`, or `<script>` tags.
-
-Read `references/interactive-elements.md` for HTML patterns for each interactive element type. Read `references/design-system.md` for visual conventions.
-
-#### Parallel path (complex codebases)
-
-Dispatch modules to subagents in batches of up to 3. Each agent receives:
+**Step 3: Write modules** — Dispatch modules to subagents in batches of up to 3. Each agent receives:
 - Its module brief (from `course-name/briefs/`)
 - `references/content-philosophy.md` and `references/gotchas.md`
 - Only the sections of `references/interactive-elements.md` and `references/design-system.md` listed in the brief
 
 Each agent writes its module file(s) to `course-name/modules/`. Short modules (3 screens, one animation) can be paired — two briefs given to one agent.
 
+**Every agent prompt must state the output format**, since agents never see SKILL.md: write `course-name/modules/0N-slug.html` containing only the `<section class="module" id="module-N">` block and its contents — no `<html>`, `<head>`, `<body>`, `<style>`, or `<script>` tags. The shell and assets already exist; the agent is writing a fragment, not a page.
+
 **What agents do NOT receive:** the full codebase (snippets are in the brief), SKILL.md, other modules' briefs, or unneeded reference file sections.
 
 After all agents finish, do a quick consistency check in the main context: nav dots match modules, transitions between modules are coherent, no obvious tone shifts.
 
-**Step 4 (both paths): Assemble** — Run `build.sh` from the course directory:
+**Step 4: Assemble** — Run `build.sh` from the course directory:
 ```bash
 cd course-name && bash build.sh
 ```
@@ -215,6 +204,6 @@ The `references/` directory contains detailed specs. **Read them only when you r
 
 - **`references/content-philosophy.md`** — Visual density rules, metaphor guidelines, tooltip rules, code translation guidance. Read during Phase 2.5 (briefs) and Phase 3 (writing modules).
 - **`references/gotchas.md`** — Common failure points checklist. Read during Phase 3 and Phase 4 (review).
-- **`references/module-brief-template.md`** — Template for Phase 2.5 module briefs. Read only for complex codebases using the parallel path.
+- **`references/module-brief-template.md`** — Template for Phase 2.5 module briefs. Read during Phase 2.5, before dispatching any writing agents.
 - **`references/design-system.md`** — Complete CSS custom properties, color palette, typography scale, spacing system, shadows, animations, scrollbar styling. Read during Phase 3 when writing module HTML.
 - **`references/interactive-elements.md`** — Implementation patterns for every interactive element: code↔English translations, group chat animations, message flow visualizations, architecture diagrams, layer toggles, pattern cards, callout boxes, glossary tooltips. Read the relevant sections during Phase 3.
