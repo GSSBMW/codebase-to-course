@@ -1,6 +1,6 @@
 # Module Brief Template
 
-> **When to read this:** During Phase 2.5 (planning checkpoint) for complex codebases. Fill in one brief per module, save to `course-name/briefs/0N-slug.md`. Each brief gives a Codex subagent everything it needs to write one module without reading the codebase or SKILL.md.
+> **When to read this:** During Phase 2.5 for every course. Fill in one brief per module and save it to `course-name/briefs/0N-slug.md`. Each brief gives a Codex subagent everything it needs to write one module without reading the codebase or SKILL.md.
 
 ---
 
