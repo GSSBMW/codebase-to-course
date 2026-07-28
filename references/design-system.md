@@ -59,7 +59,7 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
 ```
 
 **Rules:**
-- Even-numbered modules use `--color-bg`, odd-numbered use `--color-bg-warm` (alternating backgrounds create visual rhythm)
+- Alternating module backgrounds (`--color-bg` / `--color-bg-warm`) create visual rhythm. This is automatic — `styles.css` alternates them with `.module:nth-of-type(odd|even)`. Never set a `background` on a `.module` in module HTML; an inline background breaks the alternation for every module after it.
 - Actor colors should be visually distinct from each other and from the accent
 - Code blocks always use `--color-bg-code` with light text
 
@@ -149,6 +149,10 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
   padding: var(--space-16) var(--space-6);
   padding-top: calc(var(--nav-height) + var(--space-12));
 }
+/* Alternation is automatic — module HTML sets no background */
+.module:nth-of-type(odd)  { background: var(--color-bg); }
+.module:nth-of-type(even) { background: var(--color-bg-warm); }
+
 .module-content {
   max-width: var(--content-width);
   margin: 0 auto;
@@ -279,7 +283,7 @@ document.addEventListener('keydown', (e) => {
 
 **HTML template for each module:**
 ```html
-<section class="module" id="module-N" style="background: var(--color-bg or --color-bg-warm)">
+<section class="module" id="module-N">
   <div class="module-content">
     <header class="module-header animate-in">
       <span class="module-number">0N</span>

@@ -254,6 +254,12 @@ pre::-webkit-scrollbar { display: none; }
   padding-top: calc(var(--nav-height) + var(--space-12));
 }
 
+/* Alternating warm backgrounds create visual rhythm between modules.
+   Handled here so module HTML never needs — and must never set — an
+   inline background. */
+.module:nth-of-type(odd)  { background: var(--color-bg); }
+.module:nth-of-type(even) { background: var(--color-bg-warm); }
+
 .module-content {
   max-width: var(--content-width);
   margin: 0 auto;
