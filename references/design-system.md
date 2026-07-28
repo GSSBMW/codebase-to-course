@@ -1,6 +1,8 @@
 # Design System Reference
 
-Complete CSS design tokens for the course. Copy this entire `:root` block into the course HTML and adapt the accent color to suit the project's personality.
+Reference for the course's CSS design tokens — what each one means and when to reach for it while writing module HTML.
+
+> **Do not copy any CSS from this file into a course.** Every token and rule below already ships in `references/styles.css`, which is copied verbatim into the course directory. The only per-course customization is the four `ACCENT_*` values in `_base.html`. Use the tokens by name (`var(--space-6)`, `var(--color-accent)`) in module HTML; never redeclare them, and never add `<style>` blocks.
 
 ## Table of Contents
 1. [Color Palette](#color-palette)
