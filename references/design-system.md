@@ -21,49 +21,57 @@ Reference for the course's CSS design tokens — what each one means and when to
 
 ```css
 :root {
-  /* --- BACKGROUNDS --- */
-  --color-bg:             #FAF7F2;       /* warm off-white, like aged paper */
-  --color-bg-warm:        #F5F0E8;       /* slightly warmer for alternating modules */
-  --color-bg-code:        #1E1E2E;       /* deep indigo-charcoal for code blocks */
-  --color-text:           #2C2A28;       /* dark charcoal, easy on eyes */
-  --color-text-secondary: #6B6560;       /* warm gray for secondary text */
-  --color-text-muted:     #9E9790;       /* muted for timestamps, labels */
-  --color-border:         #E5DFD6;       /* subtle warm border */
-  --color-border-light:   #EEEBE5;       /* even lighter border */
-  --color-surface:        #FFFFFF;       /* card surfaces */
-  --color-surface-warm:   #FDF9F3;       /* warm card surface */
+  /* --- BACKGROUNDS — warm dark, layered darkest→lightest:
+         bg-code (inset panels) < bg < bg-warm < surface < surface-warm --- */
+  --color-bg:             #2B2521;       /* warm dark charcoal — the page */
+  --color-bg-warm:        #332C27;       /* lighter warm, for alternating modules */
+  --color-bg-code:        #1E1E2E;       /* deep indigo — darkest, so code reads as inset */
+  --color-text:           #EFE9E2;       /* warm off-white, never pure white */
+  --color-text-secondary: #BCB2A8;       /* warm gray for secondary text */
+  --color-text-muted:     #A0968C;       /* muted for timestamps, labels */
+  --color-border:         #473F38;       /* subtle warm border */
+  --color-border-light:   #3A332D;       /* quieter border */
+  --color-surface:        #39322C;       /* card surfaces, elevated above the page */
+  --color-surface-warm:   #403830;       /* warmest card surface */
 
   /* --- ACCENT (adapt per project — pick ONE bold color) ---
-     Default: vermillion. Alternatives: coral (#E06B56), teal (#2A7B9B),
-     amber (#D4A843), forest (#2D8B55). Avoid purple gradients. */
-  --color-accent:         #D94F30;
-  --color-accent-hover:   #C4432A;
-  --color-accent-light:   #FDEEE9;
+     Default: vermillion. Alternatives: coral (#E87A64), teal (#4BA3C7),
+     amber (#E0B851), forest (#4FB37A). Avoid purple gradients.
+     Note two dark-theme inversions: hover is LIGHTER than the base, and
+     -light is a dark tint used as a background, not a pale wash. */
+  --color-accent:         #E85E3D;
+  --color-accent-hover:   #F2795A;
+  --color-accent-light:   #3D231B;
   --color-accent-muted:   #E8836C;
 
-  /* --- SEMANTIC --- */
-  --color-success:        #2D8B55;
-  --color-success-light:  #E8F5EE;
-  --color-error:          #C93B3B;
-  --color-error-light:    #FDE8E8;
-  --color-info:           #2A7B9B;
-  --color-info-light:     #E4F2F7;
+  /* --- SEMANTIC — brightened for legibility on dark;
+         each -light pair is a dark tint for use as a background --- */
+  --color-success:        #6FD39A;
+  --color-success-light:  #1E3328;
+  --color-error:          #F0908C;
+  --color-error-light:    #3A2220;
+  --color-info:           #6FC5E3;
+  --color-info-light:     #172C36;
 
   /* --- ACTOR COLORS (assign to main components) ---
      Each major "character" in the codebase gets a distinct color
-     for chat bubbles, diagrams, and highlights */
-  --color-actor-1:        #D94F30;       /* vermillion */
-  --color-actor-2:        #2A7B9B;       /* teal */
-  --color-actor-3:        #7B6DAA;       /* muted plum */
-  --color-actor-4:        #D4A843;       /* golden */
-  --color-actor-5:        #2D8B55;       /* forest */
+     for chat bubbles, diagrams, and highlights. Brightened for dark —
+     these are used as small text (chat sender names), so light-theme
+     versions fail contrast. */
+  --color-actor-1:        #F0714E;       /* vermillion */
+  --color-actor-2:        #56B6D6;       /* teal */
+  --color-actor-3:        #A99AD8;       /* plum */
+  --color-actor-4:        #E3BC5C;       /* golden */
+  --color-actor-5:        #5FC088;       /* forest */
 }
 ```
 
 **Rules:**
 - Alternating module backgrounds (`--color-bg` / `--color-bg-warm`) create visual rhythm. This is automatic — `styles.css` alternates them with `.module:nth-of-type(odd|even)`. Never set a `background` on a `.module` in module HTML; an inline background breaks the alternation for every module after it.
 - Actor colors should be visually distinct from each other and from the accent
-- Code blocks always use `--color-bg-code` with light text
+- Code blocks always use `--color-bg-code` with light text — it is the darkest layer, so code recedes into the page rather than floating on it
+- Text on a filled accent or actor chip (buttons, step numbers, avatars) is `var(--color-bg)`, not white — dark-on-bright is what reads on a dark theme
+- Never introduce a pure white (`#FFF`) or pure black (`#000`) surface; both break the warm dark palette
 
 ---
 
@@ -168,14 +176,14 @@ Reference for the course's CSS design tokens — what each one means and when to
 
 ```css
 :root {
-  --shadow-sm:  0 1px 2px rgba(44, 42, 40, 0.05);
-  --shadow-md:  0 4px 12px rgba(44, 42, 40, 0.08);
-  --shadow-lg:  0 8px 24px rgba(44, 42, 40, 0.1);
-  --shadow-xl:  0 16px 48px rgba(44, 42, 40, 0.12);
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.38);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.48);
+  --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.58);
 }
 ```
 
-Use warm-tinted RGBA (44, 42, 40) — never pure black shadows.
+On a dark page a lightly-tinted shadow is invisible, so these are deep. Elevation is carried as much by surface lightness (`--color-surface` sits above `--color-bg`) as by the shadow itself — use both together.
 
 ---
 
@@ -357,7 +365,7 @@ body {
   background: var(--color-bg);
   background-image: radial-gradient(
     ellipse at 20% 50%,
-    rgba(217, 79, 48, 0.03) 0%,
+    rgba(232, 94, 61, 0.07) 0%,
     transparent 50%
   );
 }

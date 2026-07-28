@@ -186,15 +186,17 @@ After running `build.sh`, open `index.html` in the browser. Walk the user throug
 
 ## Design Identity
 
-The visual design should feel like a **beautiful developer notebook** — warm, inviting, and distinctive. Read `references/design-system.md` for the full token system, but here are the non-negotiable principles:
+The course is **dark-themed** — it should feel like a beautiful developer notebook read at night: warm, inviting, and distinctive, never a cold black terminal. Read `references/design-system.md` for the full token system, but here are the non-negotiable principles:
 
-- **Warm palette**: Off-white backgrounds (like aged paper), warm grays, NO cold whites or blues
-- **Bold accent**: One confident accent color (vermillion, coral, teal — NOT purple gradients)
+- **Warm dark palette**: Backgrounds are warm charcoal (`#2B2521`), NOT pure black and NOT cold blue-black. Text is warm off-white, never pure white.
+- **Layered by lightness**: Depth comes from surface lightness, not just shadow — code blocks are the darkest layer, then the page, then alternating modules, then cards. Never flatten this order.
+- **Bold accent**: One confident accent color (vermillion, coral, teal — NOT purple gradients). On dark, hover goes *lighter* than the base, and the `-light` token is a dark tint used as a background, not a pale wash.
+- **Dark text on bright fills**: Filled accent chips (buttons, step numbers, avatars) use the page's dark color as their text, not white — it reads far more crisply on a dark theme.
 - **Distinctive typography**: Display font with personality for headings (Bricolage Grotesque, or similar bold geometric face — NEVER Inter, Roboto, Arial, or Space Grotesk). Clean sans-serif for body (DM Sans or similar). JetBrains Mono for code.
 - **Generous whitespace**: Modules breathe. Max 3-4 short paragraphs per screen.
-- **Alternating backgrounds**: Even/odd modules alternate between two warm background tones for visual rhythm
-- **Dark code blocks**: IDE-style with Catppuccin-inspired syntax highlighting on deep indigo-charcoal (#1E1E2E)
-- **Depth without harshness**: Subtle warm shadows, never black drop shadows
+- **Alternating backgrounds**: Odd/even modules alternate between two warm dark tones for visual rhythm. This is automatic in `styles.css` — module HTML never sets a background.
+- **Dark code blocks**: IDE-style with Catppuccin-inspired syntax highlighting on deep indigo-charcoal (#1E1E2E) — the darkest element on the page, so code reads as inset.
+- **Depth without harshness**: Shadows are deep enough to register on a dark page, paired with lighter surfaces to carry elevation.
 
 ---
 

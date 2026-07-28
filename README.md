@@ -42,7 +42,7 @@ The folder also keeps the per-module HTML sources and the `build.sh` that assemb
 <img width="720" alt="Glossary tooltip" src="https://github.com/user-attachments/assets/ac2f160a-d73f-4779-97b2-a06fdb5f3227" />
 
   
-- **Warm, distinctive design** — not the typical purple-gradient AI look
+- **Warm dark design** — a developer notebook read at night, not a cold black terminal or the typical purple-gradient AI look
 
 ## How to use
 

@@ -11,38 +11,43 @@
 
 /* ── DESIGN TOKENS ─────────────────────────────────────────── */
 :root {
-  /* BACKGROUNDS */
-  --color-bg:             #FAF7F2;
-  --color-bg-warm:        #F5F0E8;
-  --color-bg-code:        #1E1E2E;
-  --color-text:           #2C2A28;
-  --color-text-secondary: #6B6560;
-  --color-text-muted:     #9E9790;
-  --color-border:         #E5DFD6;
-  --color-border-light:   #EEEBE5;
-  --color-surface:        #FFFFFF;
-  --color-surface-warm:   #FDF9F3;
+  /* BACKGROUNDS — warm dark. Layered darkest→lightest:
+     bg-code (inset panels) < bg < bg-warm < surface < surface-warm */
+  --color-bg:             #2B2521;   /* warm dark charcoal — page */
+  --color-bg-warm:        #332C27;   /* alternating modules */
+  --color-bg-code:        #1E1E2E;   /* deep indigo — darkest, reads as inset */
+  --color-text:           #EFE9E2;   /* warm off-white */
+  --color-text-secondary: #BCB2A8;   /* warm gray */
+  --color-text-muted:     #A0968C;   /* muted labels, timestamps */
+  --color-border:         #473F38;
+  --color-border-light:   #3A332D;
+  --color-surface:        #39322C;   /* cards, elevated above page */
+  --color-surface-warm:   #403830;
 
-  /* ACCENT — overridden per course in _base.html */
-  --color-accent:         #D94F30;
-  --color-accent-hover:   #C4432A;
-  --color-accent-light:   #FDEEE9;
+  /* ACCENT — overridden per course in _base.html.
+     On dark, hover goes LIGHTER than base, and -light is a dark tint
+     used as a background (callouts, glows), not a pale wash. */
+  --color-accent:         #E85E3D;
+  --color-accent-hover:   #F2795A;
+  --color-accent-light:   #3D231B;
   --color-accent-muted:   #E8836C;
 
-  /* SEMANTIC */
-  --color-success:        #2D8B55;
-  --color-success-light:  #E8F5EE;
-  --color-error:          #C93B3B;
-  --color-error-light:    #FDE8E8;
-  --color-info:           #2A7B9B;
-  --color-info-light:     #E4F2F7;
+  /* SEMANTIC — brightened for legibility on dark;
+     the -light pairs are dark tints for use as backgrounds */
+  --color-success:        #6FD39A;
+  --color-success-light:  #1E3328;
+  --color-error:          #F0908C;
+  --color-error-light:    #3A2220;
+  --color-info:           #6FC5E3;
+  --color-info-light:     #172C36;
 
-  /* ACTOR COLORS */
-  --color-actor-1:        #D94F30;
-  --color-actor-2:        #2A7B9B;
-  --color-actor-3:        #7B6DAA;
-  --color-actor-4:        #D4A843;
-  --color-actor-5:        #2D8B55;
+  /* ACTOR COLORS — brightened for dark. These are used as small text
+     (chat sender names), so the light-theme versions failed contrast. */
+  --color-actor-1:        #F0714E;   /* vermillion */
+  --color-actor-2:        #56B6D6;   /* teal */
+  --color-actor-3:        #A99AD8;   /* plum */
+  --color-actor-4:        #E3BC5C;   /* golden */
+  --color-actor-5:        #5FC088;   /* forest */
 
   /* FONTS */
   --font-display: 'Bricolage Grotesque', Georgia, serif;
@@ -92,11 +97,12 @@
   --radius-lg:   16px;
   --radius-full: 9999px;
 
-  /* SHADOWS (warm-tinted, never pure black) */
-  --shadow-sm: 0 1px 2px rgba(44,42,40,0.05);
-  --shadow-md: 0 4px 12px rgba(44,42,40,0.08);
-  --shadow-lg: 0 8px 24px rgba(44,42,40,0.10);
-  --shadow-xl: 0 16px 48px rgba(44,42,40,0.12);
+  /* SHADOWS — on a dark page a tinted shadow is invisible, so these
+     are deeper. Elevation is carried by surface lightness too. */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.38);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.48);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.58);
 
   /* EASING */
   --ease-out:    cubic-bezier(0.16,1,0.3,1);
@@ -125,7 +131,7 @@ body {
   background: var(--color-bg);
   background-image: radial-gradient(
     ellipse at 20% 50%,
-    rgba(217,79,48,0.03) 0%,
+    rgba(232,94,61,0.07) 0%,
     transparent 50%
   );
 }
@@ -166,7 +172,7 @@ pre::-webkit-scrollbar { display: none; }
   top: 0; left: 0; right: 0;
   height: var(--nav-height);
   z-index: 1000;
-  background: rgba(250,247,242,0.92);
+  background: rgba(43,37,33,0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-border-light);
 }
@@ -273,7 +279,7 @@ pre::-webkit-scrollbar { display: none; }
   font-size: var(--text-6xl);
   font-weight: 800;
   color: var(--color-accent);
-  opacity: 0.15;
+  opacity: 0.28;   /* higher than on light — 0.15 vanishes against a dark page */
   line-height: 1;
   margin-bottom: var(--space-2);
 }
@@ -412,7 +418,7 @@ p:last-child { margin-bottom: 0; }
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: white;
+  color: var(--color-bg);   /* dark text on a bright fill reads better than white on dark themes */
   flex-shrink: 0;
 }
 
@@ -639,7 +645,7 @@ p:last-child { margin-bottom: 0; }
 }
 .layer-tab.active {
   background: var(--color-accent);
-  color: white;
+  color: var(--color-bg);   /* dark text on a bright fill reads better than white on dark themes */
   border-color: var(--color-accent);
 }
 .layer-viewport {
@@ -727,7 +733,7 @@ p:last-child { margin-bottom: 0; }
   width: 40px; height: 40px;
   border-radius: 50%;
   background: var(--color-accent);
-  color: white;
+  color: var(--color-bg);   /* dark text on a bright fill reads better than white on dark themes */
   font-family: var(--font-display);
   font-weight: 700;
   display: flex;
@@ -886,7 +892,7 @@ p:last-child { margin-bottom: 0; }
   width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--color-accent);
-  color: white;
+  color: var(--color-bg);   /* dark text on a bright fill reads better than white on dark themes */
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -913,10 +919,10 @@ p:last-child { margin-bottom: 0; }
 .btn:hover { border-color: var(--color-accent-muted); color: var(--color-accent); }
 .btn-primary {
   background: var(--color-accent);
-  color: white;
+  color: var(--color-bg);   /* dark text on a bright fill reads better than white on dark themes */
   border-color: var(--color-accent);
 }
-.btn-primary:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); color: white; }
+.btn-primary:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); color: var(--color-bg); }
 
 /* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
