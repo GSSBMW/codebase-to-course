@@ -247,8 +247,8 @@ pre::-webkit-scrollbar { display: none; }
 
 /* ── MODULE STRUCTURE ───────────────────────────────────────── */
 .module {
-  min-height: 100dvh;
-  min-height: 100vh;
+  min-height: 100vh;   /* fallback for browsers without dvh */
+  min-height: 100dvh;  /* must come second to win — accounts for mobile browser chrome */
   scroll-snap-align: start;
   padding: var(--space-16) var(--space-6);
   padding-top: calc(var(--nav-height) + var(--space-12));

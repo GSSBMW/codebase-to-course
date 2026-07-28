@@ -144,7 +144,8 @@ Complete CSS design tokens for the course. Copy this entire `:root` block into t
 **Module layout:**
 ```css
 .module {
-  min-height: 100dvh;       /* fallback: 100vh */
+  min-height: 100vh;        /* fallback first... */
+  min-height: 100dvh;       /* ...dvh second, so it wins where supported */
   scroll-snap-align: start;
   padding: var(--space-16) var(--space-6);
   padding-top: calc(var(--nav-height) + var(--space-12));

@@ -174,7 +174,7 @@ This produces `index.html`. Open it in the browser.
 - **Never regenerate** `styles.css` or `main.js` — always copy from references
 - Module files contain only `<section>` content — no boilerplate
 - Use CSS `scroll-snap-type: y proximity` (NOT `mandatory`)
-- Use `min-height: 100dvh` with `100vh` fallback on `.module`
+- On `.module`, declare `min-height: 100vh` first and `min-height: 100dvh` second — the later declaration wins, so reversing them silently disables `dvh`
 - Interactive element JS is in `main.js`; wire up via `data-*` attributes and CSS class names as shown in `references/interactive-elements.md`
 - Chat containers need `id` attributes; flow animations need `data-steps='[...]'` JSON on `.flow-animation`
 
