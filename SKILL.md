@@ -66,6 +66,29 @@ Before writing course HTML, deeply understand the codebase. Read all the key fil
 
 **Figure out what the app does yourself** by reading the README, the main entry points, and the UI code. Don't ask the user to explain the product — they may not be familiar with it either. The course should open by explaining what the app does in plain language (a brief "here's what this thing does and why it's interesting") before diving into how it works. The first module should start with a concrete user action — "imagine you paste a YouTube URL and click Analyze — here's what happens under the hood."
 
+**Start with the recent release history, not the code.** Spend a few minutes on what changed in roughly the six months before the commit the course will pin. Reading source and design docs tells you what *exists*; it does not tell you which of two coexisting things actually *runs*, and that is where courses go wrong. A mature project keeps the old implementation beside the new one for a release or two, and a default flips without a single line of the taught file changing. Design docs are worse than silent — they go stale in place, so a course that mines them teaches last year's system with this year's confidence.
+
+```bash
+gh release list --repo <owner>/<name> --limit 12
+gh release view <tag> --repo <owner>/<name> --json body -q .body   # read Highlights first
+```
+
+Without `gh` or a network, a plain clone still gets most of it:
+
+```bash
+git tag --sort=-creatordate --format='%(creatordate:short)  %(refname:short)' | head -20
+git log <previous-tag>..<tag-at-or-before-pin> --oneline | grep -iE 'default|deprecat|remov|breaking'
+```
+
+Two traps worth knowing before you run these:
+
+- **Select releases by date, not by ancestry.** Many projects cut release tags on release branches that never merge back, so the tag is not an ancestor of the commit you are pinning. `git describe`, `git tag --contains` and `merge-base --is-ancestor` then all report that your commit predates releases it actually contains — off by several releases, confidently.
+- **If the pinned commit sits on a mainline after the newest release**, those changes are in your commit but in nobody's notes. Sweep them with `git log <newest-tag-before-pin>..<pin> --oneline`.
+
+Extract four things, in order of how badly they hurt a course: **defaults that flipped** (ask of every subsystem — is the file I am about to quote the one that runs by default at this commit?), **things removed** (watch for a concept outliving its implementation: the idea may still be how the system works while the class or kernel that carried the name is gone), **old and new sitting side by side** (a `v2/` beside a `v1/` — teach whichever runs by default and name the other, so a reader who opens the file is not reading dead code), and **notable additions** a competent user would now expect the course to cover.
+
+Treat all of it as a pointer, never the authority. Release notes describe intent at release time; the code at the pinned commit is what the course explains, so verify every claim there. Notes routinely disagree with in-tree documentation — a README still calling something "experimental" while the config makes it the default is common, and the config wins.
+
 ### Phase 2: Curriculum Design
 
 Structure the course as **4-6 modules**. Most courses need 4-6. Only go to 7-8 if the codebase genuinely has that many distinct concepts worth teaching. Fewer, better modules beat more, thinner ones.
