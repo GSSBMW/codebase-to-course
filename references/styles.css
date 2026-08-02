@@ -616,6 +616,14 @@ p:last-child { margin-bottom: 0; }
   box-shadow: var(--shadow-sm);
 }
 .arch-icon { font-size: 1.5rem; }
+.arch-role {
+  display: block;
+  max-width: 16rem;
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  text-align: center;
+}
 .arch-description {
   margin-top: var(--space-4);
   padding: var(--space-4);
@@ -903,6 +911,118 @@ p:last-child { margin-bottom: 0; }
 .step-body strong { display: block; font-weight: 600; margin-bottom: var(--space-1); }
 .step-body p { margin: 0; color: var(--color-text-secondary); font-size: var(--text-sm); }
 
+/* ── STATIC COURSE DIAGRAMS ───────────────────────────────── */
+.course-diagram {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.course-diagram figcaption { margin-bottom: var(--space-5); }
+.diagram-title {
+  display: block;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+.diagram-takeaway {
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-light);
+  color: var(--color-text);
+}
+.diagram-stages { display: grid; gap: var(--space-3); }
+.diagram-stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-warm);
+}
+.diagram-stage strong { display: block; margin-bottom: var(--space-1); }
+.diagram-stage small {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+.diagram-stage-number {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.diagram-edge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.diagram-transform {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: stretch;
+}
+.diagram-state-box,
+.diagram-op,
+.diagram-branch {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-warm);
+}
+.diagram-op { align-self: center; text-align: center; }
+.diagram-question {
+  margin-bottom: var(--space-4);
+  font-weight: 700;
+}
+.diagram-branches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-4);
+}
+.diagram-compare {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.8fr) repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.compare-cell {
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  border-right: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+  overflow-wrap: anywhere;
+}
+.compare-cell:nth-child(3n) { border-right: 0; }
+.compare-head {
+  background: var(--color-bg-warm);
+  color: var(--color-text);
+  font-weight: 700;
+}
+.compare-attr {
+  background: var(--color-surface-warm);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
 /* ── SHARED BUTTON STYLE ────────────────────────────────────── */
 .btn {
   padding: var(--space-2) var(--space-5);
@@ -934,6 +1054,23 @@ p:last-child { margin-bottom: 0; }
   .translation-block { grid-template-columns: 1fr; }
   .translation-english { border-left: none; border-top: 3px solid var(--color-accent); }
   .pattern-cards { grid-template-columns: 1fr 1fr; }
+  .diagram-transform { grid-template-columns: 1fr; }
+  .diagram-op { width: 100%; }
+  .diagram-compare { display: block; }
+  .compare-head { display: none; }
+  .compare-cell {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.45fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    border-right: 0;
+  }
+  .compare-cell::before {
+    content: attr(data-col);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
 }
 
 @media (max-width: 480px) {

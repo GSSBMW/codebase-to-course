@@ -60,6 +60,26 @@ Before writing course HTML, deeply understand the codebase. Read all the key fil
 - The main "actors" (components, services, modules) and their responsibilities
 - The primary user journey (what happens when someone uses the app end-to-end)
 - Key APIs, data flows, and communication patterns
+- The important data states and units at each stage: text, tokens, token IDs,
+  requests, sequences, batches, blocks, bytes, and so on
+- For iterative or pipelined paths, which step produces a value, which later step
+  first consumes or stores it, and which completed-state snapshot a concurrent
+  planner can see. Do not treat “selected,” “committed,” “returned,” “processed,”
+  and “cached” as the same state.
+- The logical owner, executing process, and physical storage location of important
+  components and resources; these may be three different answers
+- Which numbers configure runtime behavior, which describe current state, and which
+  are only estimates or startup diagnostics
+- For each status field or metric, its numerator or event count, denominator when
+  applicable, aggregation window, reset point, process or engine scope, and whether
+  it is always emitted, conditionally emitted, or exported through another surface
+- For each resource-setting recommendation, the allocation order and arithmetic:
+  which quantity is a total budget, which costs are fixed, which remainder changes,
+  which startup or runtime stage fails, and whether raising or lowering the setting
+  can actually affect that failure
+- For each feature or optimization, the setting or default that permits it, the
+  runtime condition that actually selects it, and the workload or resource condition
+  required for a real benefit
 - Clever engineering patterns (caching, lazy loading, error handling, etc.)
 - Real bugs or gotchas (if visible in git history or comments)
 - The tech stack and why each piece was chosen
@@ -112,17 +132,22 @@ This is a **menu, not a checklist**. Pick the modules that serve the codebase �
 **Each module should contain:**
 - 3-6 screens (sub-sections that flow within the module)
 - At least one code-with-English translation
-- At least one interactive element (visualization, animation, or diagram)
+- At least one explanatory visual (static or interactive)
 - One or two "aha!" callout boxes with universal CS insights
-- A metaphor that grounds the technical concept in everyday life — but NEVER reuse the same metaphor across modules, and NEVER default to the "restaurant" metaphor (it's overused). Pick metaphors that organically fit the specific concept. The best metaphors feel *inevitable* for the concept, not forced.
+- A metaphor only when it makes the mechanism easier to understand in fewer words.
+  Omit it when the literal process is clearer.
 
-**Mandatory interactive elements (every course must include ALL of these):**
-- **Group Chat Animation** — at least one across the course. These are the iMessage/WeChat-style conversations between components. They're one of the most engaging elements and must always appear, even if you have to creatively frame a module's concept as a conversation between actors.
-- **Message Flow / Data Flow Animation** — at least one across the course. The step-by-step packet animation between actors. If the codebase has any kind of request/response, data pipeline, or multi-step process, animate it. Every codebase has data flowing somewhere — find it.
-- **Code ↔ English Translation Blocks** — at least one per module (already required above, but reiterating: this is non-negotiable).
-- **Glossary Tooltips** — on every technical term, first use per module.
-
-These four element types are the backbone of every course. Other interactive elements (architecture diagrams, layer toggles, pattern cards, etc.) are optional and should be added when they fit. But the four above must ALWAYS be present — no exceptions.
+**Core teaching elements:**
+- **Code ↔ English Translation Blocks** — at least one per module.
+- **Architecture and data flow** — when ownership and movement are both important,
+  draw one static figure with process boundaries, components, arrows, payloads, and
+  numbered stages. Do not require clicks to reveal the essential route.
+- **Glossary support** — define central terms inline. Use a tooltip only for an
+  optional definition of a genuinely technical term; do not tooltip basic or repeated
+  words.
+- **Interaction** — use animation, toggles, or a group chat only when the interaction
+  matches the mechanism and improves comprehension. Interaction may highlight a
+  complete explanation; it must not contain the only explanation.
 
 **Do NOT present the curriculum for approval — just build it.** The user wants a course, not a planning document. Design the curriculum internally, then go straight to building. If they want changes, they'll tell you after seeing the result.
 
@@ -130,14 +155,47 @@ These four element types are the backbone of every course. Other interactive ele
 
 ### Phase 2.5: Module Briefs
 
-Write a brief for each module before writing any HTML. This is the critical step that enables parallel writing — each brief gives an agent everything it needs without re-reading the codebase.
+Write a course contract and one brief per module before writing any HTML. This is the
+critical step that enables parallel writing without letting independently written
+modules invent different names, scopes, states, or visual rules.
 
-Read `references/module-brief-template.md` for the template structure. Read `references/content-philosophy.md` for the content rules that should guide brief writing.
+Read `references/course-contract-template.md` and write
+`course-name/briefs/00-course-contract.md` first. Record the pinned source revision and
+default or optional execution paths, the canonical actor and process registry, shared
+example labels, state and unit vocabulary, color assignments, target desktop/mobile
+widths, source-snippet rules, HTML constraints, and a course-wide glossary registry
+that records each term's first visible definition and its single optional tooltip
+location. Then read
+`references/module-brief-template.md` for the module structure and
+`references/content-philosophy.md` for the content rules.
 
 **For each module, write a brief to `course-name/briefs/0N-slug.md` containing:**
-- Teaching arc (metaphor, opening hook, key insight)
+- Teaching arc (opening hook, key insight, and an optional metaphor)
+- Central noun definitions and the exact lifecycle state used by the example
+- A compact state-and-units ledger for the concrete example
+- A step-indexed transition ledger for iterative paths: input state, work performed,
+  state persisted, output selected or emitted, and the later step that first consumes
+  or stores that output
+- The ownership and resource lifecycle used by the example: who allocates, assigns,
+  releases, reuses, or merely reports each resource, plus where it physically resides
+  and which process executes the relevant operation
+- The shape and cell meaning of every important table or tensor, plus operand and
+  result definitions for every formula the learner must follow
+- A claim ledger for consequential counts, limits, defaults, ownership boundaries,
+  set/subset relationships, and performance claims, including source evidence and
+  whether each value controls runtime behavior or only reports/estimates it. For a
+  feature claim, separate configuration, runtime selection, and benefit conditions.
+- For code conditions and assertions, the plain-English question being tested, both
+  operands or readings, when each value was recorded, the expected relationship, and
+  the consequence when the test fails. For mutable counters, include accumulation,
+  reset, and reporting scope.
+- For configuration advice, the controlled budget or policy, fixed versus adjustable
+  costs, allocation order, failure stage, direction of change, and resulting trade-off.
 - Pre-extracted code snippets (copy-pasted from the codebase with file paths and line numbers)
-- Interactive elements checklist with enough detail to build them
+- Visual and interactive elements with enough detail to build them, including
+  ownership zones, route, payloads, table dimensions, and repeat cadence when relevant
+- Standalone wording for headings, legends, branch labels, and table headers; each
+  must name its subject without depending on a nearby paragraph for its meaning
 - Which sections of which reference files the writing agent needs
 - What the previous and next modules cover (for transitions)
 
@@ -155,7 +213,7 @@ course-name/
   _base.html       ← customized shell (title, accent color, nav dots)
   _footer.html     ← copied verbatim from references/_footer.html
   build.sh         ← copied verbatim from references/build.sh
-  briefs/          ← module briefs (can delete after build)
+  briefs/          ← course contract plus module briefs; keep with the course
   modules/
     01-intro.html
     02-actors.html
@@ -175,6 +233,7 @@ course-name/
 - `NAV_DOTS` → one `<button class="nav-dot" ...>` per module
 
 **Step 3: Write modules** — Dispatch modules to subagents in batches of up to 3. Each agent receives:
+- `course-name/briefs/00-course-contract.md`
 - Its module brief (from `course-name/briefs/`)
 - `references/content-philosophy.md` and `references/gotchas.md`
 - Only the sections of `references/interactive-elements.md` and `references/design-system.md` listed in the brief
@@ -185,7 +244,13 @@ Each agent writes its module file(s) to `course-name/modules/`. Short modules (3
 
 **What agents do NOT receive:** the full codebase (snippets are in the brief), SKILL.md, other modules' briefs, or unneeded reference file sections.
 
-After all agents finish, do a quick consistency check in the main context: nav dots match modules, transitions between modules are coherent, no obvious tone shifts.
+After all agents finish, reconcile every module against its brief and the course
+contract in the main context. Verify canonical actor names and colors, process
+boundaries, example-state handoffs, first-use definitions, feature scope, source
+snippets, course-wide tooltip locations, nav dots, transitions, and HTML constraints.
+Remove repeated tooltip definitions instead of treating each module as a new glossary.
+Recheck any repair that spans
+multiple modules instead of assuming independently edited files still agree.
 
 **Step 4: Assemble** — Run `build.sh` from the course directory:
 ```bash
@@ -203,7 +268,11 @@ This produces `index.html`. Open it in the browser.
 
 ### Phase 4: Review and Open
 
-After running `build.sh`, open `index.html` in the browser. Walk the user through what was built and ask for feedback on content, design, and interactivity.
+After running `build.sh`, review the assembled course as both a first-time learner and
+a source verifier. Use `review-generated-course` when available. Confirm that important
+nouns, units, state transitions, limits, and diagrams remain understandable without
+hovering or clicking. Inspect representative desktop and mobile widths, then walk the
+user through what was built and ask for feedback on content, design, and interactivity.
 
 ---
 

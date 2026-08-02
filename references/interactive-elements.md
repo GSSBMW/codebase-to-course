@@ -9,15 +9,16 @@ Implementation patterns for every interactive element type used in courses. Pick
 2. [Group Chat Animation](#group-chat-animation)
 3. [Message Flow / Data Flow Animation](#message-flow--data-flow-animation)
 4. [Interactive Architecture Diagram](#interactive-architecture-diagram)
-5. [Layer Toggle Demo](#layer-toggle-demo)
-6. [Callout Boxes](#callout-boxes)
-7. [Pattern/Feature Cards](#patternfeature-cards)
-8. [Flow Diagrams](#flow-diagrams)
-9. [Permission/Config Badges](#permissionconfig-badges)
-10. [Glossary Tooltips](#glossary-tooltips)
-11. [Visual File Tree](#visual-file-tree)
-12. [Icon-Label Rows](#icon-label-rows)
-13. [Numbered Step Cards](#numbered-step-cards)
+5. [Static Course Diagrams](#static-course-diagrams)
+6. [Layer Toggle Demo](#layer-toggle-demo)
+7. [Callout Boxes](#callout-boxes)
+8. [Pattern/Feature Cards](#patternfeature-cards)
+9. [Flow Diagrams](#flow-diagrams)
+10. [Permission/Config Badges](#permissionconfig-badges)
+11. [Glossary Tooltips](#glossary-tooltips)
+12. [Visual File Tree](#visual-file-tree)
+13. [Icon-Label Rows](#icon-label-rows)
+14. [Numbered Step Cards](#numbered-step-cards)
 
 ---
 
@@ -219,7 +220,8 @@ Step-by-step visualization of data moving between components. User clicks "Next 
 
 ## Interactive Architecture Diagram
 
-Full-system diagram where clicking a component shows its description.
+Full-system diagram whose ownership zones and component responsibilities are visible
+immediately. Clicking may show optional deeper detail, but never the only description.
 
 **Wiring:** `main.js` auto-initializes every `.arch-component` on page load — do **not** add an `onclick` attribute. Put the text in `data-desc` on each component; clicking it marks that component `.active` and writes its `data-desc` into the `.arch-description` element of the enclosing `.arch-diagram`. Because the lookup is scoped to the closest `.arch-diagram`, multiple diagrams on one page work independently — so don't give `.arch-description` an `id`.
 
@@ -228,9 +230,10 @@ Full-system diagram where clicking a component shows its description.
 <div class="arch-diagram">
   <div class="arch-zone arch-zone-browser">
     <h4 class="arch-zone-label">Browser</h4>
-    <div class="arch-component" data-desc="Injects UI into the web page, reads DOM, captures user actions">
+    <div class="arch-component" data-desc="Optional detail: this component is initialized from src/content.ts.">
       <div class="arch-icon">📄</div>
-      <span>Component A</span>
+      <strong>Component A</strong>
+      <span class="arch-role">Injects UI into the page and captures user actions.</span>
     </div>
     <!-- more components -->
   </div>
@@ -238,8 +241,68 @@ Full-system diagram where clicking a component shows its description.
     <h4 class="arch-zone-label">External Services</h4>
     <!-- API cards -->
   </div>
-  <div class="arch-description">Click any component to learn what it does</div>
+  <div class="arch-description">Select a component for optional source-level detail.</div>
 </div>
+```
+
+---
+
+## Static Course Diagrams
+
+Use a static diagram when the learner must understand the complete structure without
+clicking. Give every figure exactly one grammar class in addition to
+`course-diagram`: `course-diagram-architecture`, `-dataflow`, `-sequence`, `-state`,
+`-transformation`, `-comparison`, or `-decision`.
+
+Minimum contracts:
+
+- **Architecture:** visible ownership zones and components inside their owner.
+- **Data flow:** source, payload or transformation, destination, and cadence.
+- **Sequence:** actor + action + object at every numbered stage.
+- **State change:** the same entity and fields before and after one named transition.
+- **Comparison:** orthogonal row/column headers, parallel units, and `data-col` on
+  every non-header cell for mobile.
+- **Decision:** one question, mutually exclusive conditions, and paired outcomes.
+
+Every figure needs a visible title and one takeaway. A guide line is optional. Use an
+active marker only when real alternatives compete, and give a color-highlighted item
+a visible text label.
+
+**Sequence example:**
+
+```html
+<figure class="course-diagram course-diagram-sequence">
+  <figcaption><span class="diagram-title">One request crosses two processes</span></figcaption>
+  <div class="diagram-stages">
+    <div class="diagram-stage">
+      <span class="diagram-stage-number">1</span>
+      <span><strong>API server validates the request</strong><small>Checks fields and settings.</small></span>
+    </div>
+    <div class="diagram-edge"><span aria-hidden="true">↓</span><code>EngineRequest</code></div>
+    <div class="diagram-stage">
+      <span class="diagram-stage-number">2</span>
+      <span><strong>Engine core schedules model work</strong><small>Chooses work for this step.</small></span>
+    </div>
+  </div>
+  <p class="diagram-takeaway">The payload crosses the process boundary once per request.</p>
+</figure>
+```
+
+**Comparison example:**
+
+```html
+<figure class="course-diagram course-diagram-comparison">
+  <figcaption><span class="diagram-title">Two allocation strategies</span></figcaption>
+  <div class="diagram-compare">
+    <span class="compare-cell compare-head">Measure</span>
+    <span class="compare-cell compare-head">Strategy A</span>
+    <span class="compare-cell compare-head">Strategy B</span>
+    <span class="compare-cell compare-attr" data-col="Measure">Reserved bytes</span>
+    <span class="compare-cell" data-col="Strategy A">8 GiB</span>
+    <span class="compare-cell" data-col="Strategy B">4 GiB</span>
+  </div>
+  <p class="diagram-takeaway">Both cells use the same unit, so the comparison is direct.</p>
+</figure>
 ```
 
 ---
@@ -398,7 +461,10 @@ For annotating config files, permissions, or settings:
 
 ## Glossary Tooltips
 
-The most important accessibility feature for non-technical learners. Any technical term in the course text should be wrapped in a tooltip that shows a plain-English definition on hover (desktop) or tap (mobile). The learner never has to leave the page or Google anything.
+Use tooltips for optional technical detail after central vocabulary has been defined in
+visible prose. Do not tooltip basic words, repeated terms, or a term whose meaning is
+required to understand the sentence. The learner must not need hover or tap to follow
+the main lesson.
 
 **HTML — mark up terms inline:**
 ```html

@@ -35,10 +35,12 @@ The folder also keeps the per-module HTML sources and the `build.sh` that assemb
 - **Code ↔ Plain English translations** — real code on the left, what it means on the right
 <img width="720" alt="Code translation block" src="https://github.com/user-attachments/assets/fb9e7fac-05c1-4f98-b80c-46543ef81afc" />
 
-- **Animated visualizations** — data flow animations, group chat between components, architecture diagrams
+- **Explanatory visualizations** — static architecture and data-flow diagrams first,
+  with animation or group chat when interaction genuinely helps
 <img width="720" alt="Animated data flow" src="https://github.com/user-attachments/assets/20fb403e-7dfd-4a47-989b-bbae86ca8041" />
 
-- **Glossary tooltips** — hover any technical term for a plain-English definition
+- **Plain-language vocabulary** — central terms are defined in visible text; optional
+  technical detail can appear in a tooltip
 <img width="720" alt="Glossary tooltip" src="https://github.com/user-attachments/assets/ac2f160a-d73f-4779-97b2-a06fdb5f3227" />
 
   
@@ -70,9 +72,16 @@ This inverts traditional CS education. The old way: memorize concepts for years 
 
 Every screen is at least 50% visual. Max 2-3 sentences per text block. If something can be a diagram, animation, or interactive element — it shouldn't be a paragraph.
 
-### No recycled metaphors
+### Mechanism before metaphor
 
-Each concept gets a metaphor that fits *that specific idea*. A database is a library with a card catalog. Auth is a bouncer checking IDs. API rate limiting is a nightclub with a capacity limit. Never the same metaphor twice.
+Name the real actors, action, data, and result first. Add a metaphor only when it is
+shorter and clearer than the mechanism itself.
+
+### State, units, and limits are explicit
+
+Examples say what has been supplied, computed, cached, scheduled, and returned. Every
+important count names its unit and whether it configures behavior, describes current
+state, estimates capacity, or is diagnostic only.
 
 ### Original code only
 
@@ -80,7 +89,7 @@ Code snippets are exact copies from the real codebase — never modified or simp
 
 ### One brief, one agent, one module
 
-Writing a whole course in a single pass makes the last modules thin and rushed. So every module gets a written brief first — teaching arc, metaphor, pre-extracted code snippets — and then its own writing agent turns that brief into HTML. Modules are written in parallel, and each agent starts with a small, focused context: the brief carries the code snippets, so writing agents never re-read the codebase.
+Writing a whole course in a single pass makes the last modules thin and rushed. So every module gets a written brief first — teaching arc, central noun definitions, example-state and claim ledgers, optional metaphor, and pre-extracted code snippets — and then its own writing agent turns that brief into HTML. Modules are written in parallel, and each agent starts with a small, focused context: the brief carries the verified source evidence and code snippets, so writing agents never re-read the codebase.
 
 ## Skill structure
 
